@@ -2,6 +2,8 @@ class WorksController < ApplicationController
   # We should always be able to tell what category
   # of work we're dealing with
   before_action :category_from_work, except: [:root, :index, :new, :create]
+  before_action :logged_in, except: [:root]
+  before_action :owns, only:[:edit, :update, :destroy]
 
   def root
     @albums = Work.best_albums
@@ -98,4 +100,19 @@ private
     render_404 unless @work
     @media_category = @work.category.downcase.pluralize
   end
+
+  def logged_in
+    if session[:user_id].nil?
+      flash[:result_text] = "You must be logged in to do that"
+      redirect_to root_path
+    end
+  end
+
+  def owns
+    if session[:user_id] != params[:id]
+      flash[:result_text] = "You can only modify things you made!"
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
 end
