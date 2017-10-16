@@ -26,7 +26,25 @@ class SessionsController < ApplicationController
   end
 
   def create
+    @auth_hash = request.env['omniauth.auth']
+    ap @auth_hash
 
+    @user = User.find_by(uid: @auth_hash['uid'], provider: @auth_hash['provider'])
+
+    if @user
+      session[:user_id] = @user.id
+      flash[:success] = "#{@user.name} has been logged in!"
+
+    else
+      @user = User.new uid: @auth_hash['uid'], provider: @auth_hash['provider'], name: @auth_hash['info']['nickname'], email: @user_hash['info']['email']
+
+      if @user.save
+        session[:user_id] = @user.id
+        flash[:success] = "#{@user.name} has been logged in!"
+      else
+        flash[:error] = "Unable to save user!"
+      end 
+    end
   end
 
 
