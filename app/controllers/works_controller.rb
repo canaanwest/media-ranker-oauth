@@ -92,7 +92,7 @@ class WorksController < ApplicationController
 
 private
   def media_params
-    params.require(:work).permit(:title, :category, :creator, :description, :publication_year)
+    params.require(:work).permit(:title, :category, :creator, :description, :publication_year).merge(user_id: @login_user.id)
   end
 
   def category_from_work
@@ -109,7 +109,7 @@ private
   end
 
   def owns
-    if session[:user_id] != params[:id]
+    if session[:user_id] != Work.find(params[:id].to_i).user_id
       flash[:result_text] = "You can only modify things you made!"
       redirect_back(fallback_location: root_path)
     end

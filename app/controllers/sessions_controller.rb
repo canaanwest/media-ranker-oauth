@@ -36,7 +36,7 @@ class SessionsController < ApplicationController
       flash[:result_text] = "#{@user.name} has been logged in!"
 
     else
-      @user = User.new(uid: @auth_hash['uid'], provider: @auth_hash['provider'], name: @auth_hash['info']['nickname'], email: @auth_hash['info']['email'], username: @auth_hash['info']['nickname'])
+      @user = User.new(uid: @auth_hash['uid'], provider: @auth_hash['provider'], name: @auth_hash['info']['name'], email: @auth_hash['info']['email'], username: @auth_hash['info']['email'])
 
       if @user.save
         session[:user_id] = @user.id
