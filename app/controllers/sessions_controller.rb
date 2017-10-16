@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
 
   def login
     username = params[:username]
-    if username and user = User.find_by(username: username)
+    if username and user = User.find_by(user: username)
       session[:user_id] = user.id
       flash[:status] = :success
       flash[:result_text] = "Successfully logged in as existing user #{user.username}"
@@ -33,18 +33,20 @@ class SessionsController < ApplicationController
 
     if @user
       session[:user_id] = @user.id
-      flash[:success] = "#{@user.name} has been logged in!"
+      flash[:result_text] = "#{@user.name} has been logged in!"
 
     else
-      @user = User.new uid: @auth_hash['uid'], provider: @auth_hash['provider'], name: @auth_hash['info']['nickname'], email: @user_hash['info']['email']
+      @user = User.new(uid: @auth_hash['uid'], provider: @auth_hash['provider'], name: @auth_hash['info']['nickname'], email: @auth_hash['info']['email'], username: @auth_hash['info']['nickname'])
 
       if @user.save
         session[:user_id] = @user.id
-        flash[:success] = "#{@user.name} has been logged in!"
+        flash[:result_text] = "#{@user.name} has been logged in!"
+
       else
-        flash[:error] = "Unable to save user!"
-      end 
+        flash[:result_text] = "Unable to save user!"
+      end
     end
+    redirect_to root_path
   end
 
 
@@ -54,4 +56,5 @@ class SessionsController < ApplicationController
     flash[:result_text] = "Successfully logged out"
     redirect_to root_path
   end
+
 end
