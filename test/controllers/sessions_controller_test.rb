@@ -19,8 +19,7 @@ describe SessionsController do
       start_count = User.count
       user = User.new(provider: "github", username: "AUSER", uid: "99999", email: "email@email.com")
 
-      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(user))
-      get auth_callback_path(:github)
+      login(user)
 
       must_redirect_to root_path
 
@@ -33,9 +32,7 @@ describe SessionsController do
       start_count = User.count
       user = User.new(provider: "github", username: "AUSER", uid: "99999")
 
-      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(user))
-      get auth_callback_path(:github)
-
+      login(user)
       must_redirect_to root_path
 
       # session[:user_id].must_equal User.last.reload.id
