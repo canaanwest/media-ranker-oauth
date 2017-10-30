@@ -1,35 +1,43 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Media Ranker 2.0</title>
-  <%= csrf_meta_tags %>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <%= stylesheet_link_tag 'application', 'https://fonts.googleapis.com/css?family=Gudea:400,700|Hammersmith+One' %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-  <%= favicon_link_tag 'favicon.ico' %>
-</head>
+    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
 
-<body>
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
   <header class="page-header row">
     <h2 class="columns small-12">
       <%= link_to "Media Ranker", root_path %>
       <small>Ranking the Best of Everything</small>
     </h2>
 
+
     <nav class="columns small-12">
-      <%= link_to "View top media", root_path, class: "button" %>
-      <%= link_to "View all media", works_path, class: "button" %>
-      <%= link_to "Add a new work", new_work_path, class: "button" %>
-      <%= link_to "View all users", users_path, class: "button" %>
+
+        <%= link_to "View top media", root_path, class: "button" %>
+        <%= link_to "View all media", works_path, class: "button" %>
+        <%= link_to "Add a new work", new_work_path, class: "button" %>
+        <%= link_to "View all users", users_path, class: "button" %>
+
       <div class="float-right">
+        <!-- T0DO -->
+        <%= @login_user %>
+        <!-- nothing is being passed -->
+
         <% if @login_user %>
-          <%= link_to "Logged in as #{@login_user.username}", user_path(@login_user), class: "button" %>
+          <%# link_to "Logged in as #{@login_user.username}", user_path(@login_user), class: "button" %>
           <%= link_to "Log Out", logout_path, method: :post, class: "button" %>
         <% else %>
-          <%= link_to "Log in with Github", "/auth/github", class: "button float-right" %>
-          <%= link_to "Log in with Google", "/auth/google_oauth2", class: "button float-right" %>
+          <%= link_to "Log In", "/auth/github", class: "button float-right" %>
         <% end %>
+
       </div>
     </nav>
   </header>

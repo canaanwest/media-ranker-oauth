@@ -9,8 +9,11 @@ class SessionsController < ApplicationController
       flash[:status] = :success
       flash[:result_text] = "Successfully logged in as existing user #{user.username}"
     else
+      puts "I'm making a new user!"
       user = User.new(username: username)
+      user.save
       if user.save
+        puts "I SAVED!"
         session[:user_id] = user.id
         flash[:status] = :success
         flash[:result_text] = "Successfully created new user #{user.username} with ID #{user.id}"
@@ -19,6 +22,7 @@ class SessionsController < ApplicationController
         flash.now[:result_text] = "Could not log in"
         flash.now[:messages] = user.errors.messages
         render "login_form", status: :bad_request
+        puts "Something went wrong!!!!"
         return
       end
     end

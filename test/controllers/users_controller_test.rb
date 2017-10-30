@@ -3,6 +3,7 @@ require 'test_helper'
 describe UsersController do
   describe "index" do
     it "succeeds with many users" do
+      log_in(users(:dan), :github)
       # Assumption: there are many users in the DB
       User.count.must_be :>, 0
 

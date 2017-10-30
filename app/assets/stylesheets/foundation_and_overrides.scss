@@ -5,7 +5,7 @@
 
 // If you'd like to include motion-ui the foundation-rails gem comes prepackaged with it, uncomment the 3 @imports, if you are not using the gem you need to install the motion-ui sass package.
 //
-// @import 'motion-ui/motion-ui';
+@import 'motion-ui/motion-ui';
 
 // We include everything by default.  To slim your CSS, remove components you don't use.
 
@@ -49,32 +49,5 @@
 
 // If you'd like to include motion-ui the foundation-rails gem comes prepackaged with it, uncomment the 3 @imports, if you are not using the gem you need to install the motion-ui sass package.
 //
-// @include motion-ui-transitions;
-// @include motion-ui-animations;
-
-
-.status {
-  border-radius: 5px;
-  background-color: $light-gray;
-  padding: 20px 25px;
-  margin-top: 30px;
-}
-
-.status.success {
-  h3 {
-    color: $dark-gray;
-  }
-}
-
-.status.failure {
-  h3 {
-    color: #C70039;
-  }
-}
-
-.status.failure, .status.success {
-  h3 {
-    font-weight: normal;
-    font-size: 1em;
-  }
-}
+@include motion-ui-transitions;
+@include motion-ui-animations;

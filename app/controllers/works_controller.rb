@@ -92,7 +92,7 @@ class WorksController < ApplicationController
 
 private
   def media_params
-    params.require(:work).permit(:title, :category, :creator, :description, :publication_year).merge(user_id: @login_user.id)
+    params.require(:work).permit(:title, :category, :creator, :description, :publication_year).merge(uid: @login_user.id)
   end
 
   def category_from_work
