@@ -40,15 +40,15 @@ describe SessionsController do
       finish_count.must_equal start_count
 
     end
-  # end
-  # describe "login_form" do
-  #   # The login form is a static page - no real way to make it fail
-  #   it "succeeds" do
-  #     get login_path
-  #     must_respond_with :success
-  #   end
-  # end
-  #
+
+  describe "login_form" do
+    # The login form is a static page - no real way to make it fail
+    it "succeeds" do
+      get login_path
+      must_respond_with :success
+    end
+  end
+
   # describe "login" do
   #   # This functionality is complex!
   #   # There are definitely interesting cases I haven't covered

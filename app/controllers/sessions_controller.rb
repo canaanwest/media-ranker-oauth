@@ -4,6 +4,9 @@ class SessionsController < ApplicationController
 
   def login
     username = params[:username]
+    unless username && username.length > 0
+      render render_404
+    end
     if username and user = User.find_by(user: username)
       session[:user_id] = user.id
       flash[:status] = :success
