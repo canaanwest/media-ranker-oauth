@@ -62,6 +62,24 @@ describe SessionsController do
     end
   end
 
+  describe "logout" do
+    it "can log out a user who is logged in" do
+      start_count = User.count
+      user = users(:dan)
+
+      OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(mock_auth_hash(user))
+
+      get auth_callback_path(:github)
+      must_redirect_to root_path
+
+      session[:user_id].must_equal user.id
+      start_count.must_equal User.count
+
+      post logout_path
+      session[:user_id].must_equal nil
+    end
+  end
+
   # describe "login" do
   #   # This functionality is complex!
   #   # There are definitely interesting cases I haven't covered
