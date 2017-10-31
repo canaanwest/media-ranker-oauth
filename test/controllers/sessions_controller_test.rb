@@ -77,6 +77,12 @@ describe SessionsController do
 
       post logout_path
       session[:user_id].must_equal nil
+      must_respond_with :redirect
+    end
+
+    it "redirects to the home page when an unauthenticated user attempts to log out" do
+      post logout_path
+      must_respond_with :redirect
     end
   end
 
