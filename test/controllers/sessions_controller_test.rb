@@ -41,6 +41,19 @@ describe SessionsController do
 
     end
 
+    it "cannot log a user in without a username" do
+      start_count = User.count
+      user = User.new(provider: "github", username: "", uid: "99999")
+
+      login(user)
+      must_redirect_to root_path
+
+      # session[:user_id].must_equal User.last.reload.id
+      finish_count = User.count
+      finish_count.must_equal start_count
+    end
+  end
+
   describe "login_form" do
     # The login form is a static page - no real way to make it fail
     it "succeeds" do
@@ -105,5 +118,4 @@ describe SessionsController do
   #     post logout_path
   #     must_redirect_to root_path
   #   end
-  end
 end
